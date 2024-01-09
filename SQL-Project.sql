@@ -1,3 +1,6 @@
+--These queries were performed in Google BigQuery to explore and join data tables on COVID Deaths and Vaccinations
+
+
 SELECT *
 FROM `case-study-409701.Covid.covid_deaths` 
 WHERE continent is not null 
