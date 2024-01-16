@@ -127,3 +127,17 @@ WHERE dea.continent is not null
 
 SELECT *, (rolling_vaccinations/population)*100
 FROM percent_population_vaccinated
+
+--Creating view to store visualizations
+
+Create View Covid.percent_population_vaccinated as 
+SELECT dea.continent, dea.location, dea.date, vac.new_vaccinations, dea.population,
+SUM(CAST(vac.new_vaccinations as int)) OVER (PARTITION BY dea.location ORDER BY dea.location, dea.date) as rolling_vaccinations
+FROM `case-study-409701.Covid.covid_deaths` dea
+JOIN `case-study-409701.Covid.covid_vaccines` vac
+  ON dea.location = vac.location
+  and dea.date = vac.date
+WHERE dea.continent is not null 
+
+SELECT*
+FROM Covid.percent_population_vaccinated
